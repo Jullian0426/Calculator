@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Calculator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="calculator">
@@ -16,11 +17,13 @@
     <button onclick="numberPressed(8)">8</button>
     <button onclick="numberPressed(9)">9</button>
     <button onclick="numberPressed(0)">0</button>
+    <button onclick="decimalPressed()">.</button>
     <button onclick="operatorPressed('+')">+</button>
     <button onclick="operatorPressed('-')">-</button>
     <button onclick="operatorPressed('*')">*</button>
     <button onclick="operatorPressed('/')">/</button>
     <button onclick="calculate()">=</button>
+    <button onclick="backspacePressed()" class="backspace-button">⌫</button>
     <button onclick="clearDisplay()">C</button>
   </div>
   

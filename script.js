@@ -87,3 +87,35 @@ function clearDisplay() {
   awaitingSecondNumber = false;
   updateDisplay();
 }
+
+function decimalPressed() {
+  if (!displayValue.includes('.')) {
+    displayValue += '.';
+    updateDisplay();
+  }
+}
+
+function backspacePressed() {
+  if (displayValue.length > 1) {
+    displayValue = displayValue.slice(0, -1);
+  } else {
+    displayValue = '0';
+  }
+  updateDisplay();
+}
+
+document.addEventListener('keydown', (event) => {
+  if (event.key >= 0 && event.key <= 9) {
+    numberPressed(event.key);
+  } else if (['+', '-', '*', '/'].includes(event.key)) {
+    operatorPressed(event.key);
+  } else if (event.key === '.') {
+    decimalPressed();
+  } else if (event.key === 'Enter' || event.key === '=') {
+    calculate();
+  } else if (event.key === 'Backspace') {
+    backspacePressed();
+  } else if (event.key === 'Escape') {
+    clearDisplay();
+  }
+});

@@ -17,9 +17,10 @@ function divide(a, b) {
   return a / b;
 }
 
-let firstNumber = 0;
-let operator = '';
-let secondNumber = 0;
+let displayValue = '0';
+let firstNumber = null;
+let operator = null;
+let awaitingSecondNumber = false;
 
 function operate(operator, num1, num2) {
   switch(operator) {
@@ -34,4 +35,55 @@ function operate(operator, num1, num2) {
     default:
       return 'Invalid operator';
   }
+}
+
+function updateDisplay() {
+  document.getElementById('display').innerText = displayValue;
+}
+
+function numberPressed(number) {
+  if (awaitingSecondNumber) {
+    displayValue = number.toString();
+    awaitingSecondNumber = false;
+  } else {
+    displayValue = displayValue === '0' ? number.toString() : displayValue + number.toString();
+  }
+  updateDisplay();
+}
+
+function operatorPressed(op) {
+  if (!awaitingSecondNumber) {
+    if (firstNumber === null) {
+      firstNumber = parseFloat(displayValue);
+    } else if (operator) {
+      const result = operate(operator, firstNumber, parseFloat(displayValue));
+      displayValue = `${parseFloat(result.toFixed(7))}`;
+      firstNumber = result;
+    }
+  }
+  operator = op;
+  awaitingSecondNumber = true;
+}
+
+function calculate() {
+  if (firstNumber == null || awaitingSecondNumber) return;
+  if (operator === '/' && displayValue === '0') {
+    displayValue = "Can't divide by zero!";
+    updateDisplay();
+    return;
+  }
+  const result = operate(operator, firstNumber, parseFloat(displayValue));
+  displayValue = `${parseFloat(result.toFixed(7))}`;
+  firstNumber = null;
+  operator = null;
+  awaitingSecondNumber = false;
+  updateDisplay();
+}
+
+function clearDisplay() {
+  displayValue = '0';
+  firstNumber = null;
+  operator = null;
+  awaitingSecondNumber = false;
+  updateDisplay();
 }
